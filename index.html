@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neymar Savings - Product Design for Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2350;--navy-600:#17346F;--navy-700:#0A1734;
+    --blue:#2450C8;
+    --gold:#EDB13E;--gold-soft:#FBEAC4;--gold-deep:#B9832A;
+    --bg:#EEF1F7;--card:#FFFFFF;--ink:#14203A;--muted:#5E6B84;--line:#DCE2EE;
+    --positive:#1E8A5A;--negative:#C0492E;
+    --sora:'Sora',system-ui,sans-serif;--manrope:'Manrope',system-ui,sans-serif;--mono:'Space Mono','Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--manrope);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+
+  .masthead{background:var(--navy);color:#fff;padding:52px 0 44px;position:relative;overflow:hidden}
+  .masthead:before{content:"";position:absolute;right:-120px;top:-120px;width:340px;height:340px;background:radial-gradient(circle, rgba(237,177,62,0.22), transparent 68%)}
+  .brandline{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .lm{width:44px;height:44px;border-radius:13px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:22px}
+  .brandline .bn{font-family:var(--sora);font-weight:700;font-size:17px}
+  .brandline .bs{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .masthead h1{font-family:var(--sora);font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;letter-spacing:-0.02em;max-width:680px}
+  .masthead p{margin-top:16px;max-width:600px;color:rgba(255,255,255,0.82);font-size:16px}
+
+  section{padding:40px 0 0}
+  .intro{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:-28px;position:relative;box-shadow:0 18px 40px -26px rgba(15,35,80,0.4)}
+  .intro h2{font-family:var(--sora);font-size:17px;margin-bottom:8px}
+  .intro p{color:var(--muted);font-size:15px}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .eyebrow:before{content:"";width:26px;height:2px;background:var(--gold)}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .rcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;transition:transform .15s, box-shadow .15s}
+  .rcard:hover{transform:translateY(-3px);box-shadow:0 20px 40px -24px rgba(15,35,80,0.4);border-color:var(--gold)}
+  .rcard .ic{width:56px;height:56px;border-radius:15px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:22px;margin-bottom:16px}
+  .rcard h3{font-family:var(--sora);font-size:19px;margin-bottom:6px}
+  .rcard .sub{color:var(--muted);font-size:14px;flex:1}
+  .rcard .list{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+  .rcard .li{font-size:13px;color:var(--ink);padding-left:16px;position:relative}
+  .rcard .li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--gold)}
+  .open-btn{margin-top:18px;background:var(--gold);color:var(--navy-700);font-weight:700;font-size:14px;padding:12px;border-radius:11px;text-align:center}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:16px}
+  .mrow{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .mrow:last-child{border-bottom:none}
+  .mrow .mi{width:34px;height:34px;border-radius:9px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:14px;flex:none}
+  .mrow .mt{font-weight:700;font-size:14px}
+  .mrow .md{font-size:13px;color:var(--muted);margin-top:1px}
+  .mrow .md b{font-family:var(--mono);color:var(--ink);font-weight:700}
+
+  .confirm{background:var(--navy);color:#fff;border-radius:16px;padding:24px;margin-top:16px}
+  .confirm h3{font-family:var(--sora);font-size:16px;color:var(--gold);margin-bottom:12px}
+  .confirm ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .confirm li{font-size:14px;color:rgba(255,255,255,0.86);padding-left:20px;position:relative}
+  .confirm li:before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:2px;background:var(--gold)}
+
+  .foot{text-align:center;margin-top:36px;color:var(--muted);font-family:var(--mono);font-size:12px;line-height:1.8;letter-spacing:0.3px}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="brandline">
+      <div class="lm">N</div>
+      <div><div class="bn">Neymar Savings</div><div class="bs">A subsidiary of Neymar Nig. Ltd.</div></div>
+    </div>
+    <div class="kicker">Product Design . For Review</div>
+    <h1>The complete platform, ready for your review.</h1>
+    <p>Every screen of the Neymar Savings platform, presented for your approval before development is finalised. Click through the two designs below to see exactly how the apps and dashboards will look and work.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <h2>Good day, Sir</h2>
+    <p>Below is the full product design for Neymar Savings, covering all four parts of the platform. The design carries your existing brand colours (navy and gold) and follows the daily contribution model exactly as you described it. Please click each card to open the screens, review them, and let me know your thoughts so we can proceed with confidence.</p>
+  </div>
+
+  <section>
+    <div class="eyebrow">Open the designs</div>
+    <div class="cards">
+
+      <a class="rcard" href="neymar-savings-apps-design.html">
+        <div class="ic">[ ]</div>
+        <h3>Mobile Apps</h3>
+        <div class="sub">The two phone apps, for iOS and Android.</div>
+        <div class="list">
+          <div class="li">Agent app: register customers, collect daily, record withdrawals</div>
+          <div class="li">Customer app: view savings, add money, track every naira</div>
+        </div>
+        <div class="open-btn">Open mobile apps design</div>
+      </a>
+
+      <a class="rcard" href="neymar-savings-dashboards-design.html">
+        <div class="ic">&lt;/&gt;</div>
+        <h3>Web Dashboards</h3>
+        <div class="sub">The management side, opened in a web browser.</div>
+        <div class="list">
+          <div class="li">Admin: monitor daily collections, supervise agents, approve withdrawals</div>
+          <div class="li">Super Admin: full control, agents, roles, settings, audit trail</div>
+        </div>
+        <div class="open-btn">Open dashboards design</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">How the money works</div>
+    <div class="panel">
+      <div class="mrow">
+        <div class="mi">31</div>
+        <div><div class="mt">A 31-day contribution cycle</div><div class="md">Each customer saves across a cycle of <b>31</b> days, matching the daily contribution card in use today.</div></div>
+      </div>
+      <div class="mrow">
+        <div class="mi">1</div>
+        <div><div class="mt">The first day is the platform slot</div><div class="md">The first saving of each cycle goes to Neymar Savings as commission. It is shown clearly so every customer sees it.</div></div>
+      </div>
+      <div class="mrow">
+        <div class="mi">2</div>
+        <div><div class="mt">Two contributions always stay</div><div class="md">A customer can withdraw at any time but must leave <b>2</b> daily contributions. On <b>NGN 1,000</b> daily, that is <b>NGN 2,000</b> kept in the account.</div></div>
+      </div>
+      <div class="mrow">
+        <div class="mi">$</div>
+        <div><div class="mt">Digital payments settle to your account</div><div class="md">Customers can also pay by card or transfer. All money settles directly into the company bank account.</div></div>
+      </div>
+      <div class="mrow">
+        <div class="mi">%</div>
+        <div><div class="mt">Everything is transparent</div><div class="md">Every deposit, withdrawal and platform slot is recorded. Customers and staff can see the full history at any time.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="confirm">
+      <h3>A few things to confirm</h3>
+      <ul>
+        <li>The Neymar Savings logo artwork, so it can be placed across the apps and dashboards.</li>
+        <li>The daily contribution amounts you want offered (for example NGN 500, NGN 1,000, NGN 2,000).</li>
+        <li>Final web address, to be registered in the company name ahead of go-live.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    <b>Neymar Savings</b>, a subsidiary of Neymar Nig. Ltd. . RC 7803876<br>
+    NIWA Ferry Terminal Complex, Outer-Marina, CMS, Lagos . 07031151051 . neymarsaving@gmail.com<br>
+    Prepared by Cyber Identity and Reverse Extension Ltd.
+  </div>
+
+</div>
+
+</body>
+</html>

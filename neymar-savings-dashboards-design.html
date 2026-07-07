@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neymar Savings - Dashboards Design v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2350;--navy-600:#17346F;--navy-700:#0A1734;
+    --blue:#2450C8;
+    --gold:#EDB13E;--gold-soft:#FBEAC4;--gold-deep:#B9832A;
+    --bg:#EEF1F7;--card:#FFFFFF;--ink:#14203A;--muted:#5E6B84;--line:#DCE2EE;
+    --positive:#1E8A5A;--negative:#C0492E;--paper:#FBF9F1;
+    --sora:'Sora',system-ui,sans-serif;--manrope:'Manrope',system-ui,sans-serif;--mono:'Space Mono','Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--manrope);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  .masthead{background:var(--navy);color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
+  .masthead:before{content:"";position:absolute;right:-120px;top:-120px;width:360px;height:360px;background:radial-gradient(circle, rgba(237,177,62,0.22), transparent 68%)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .masthead h1{font-family:var(--sora);font-weight:800;font-size:clamp(30px,5vw,50px);line-height:1.04;letter-spacing:-0.02em;max-width:820px}
+  .masthead p{margin-top:18px;max-width:680px;color:rgba(255,255,255,0.82);font-size:16px}
+  .tagrow{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.28);padding:6px 12px;border-radius:999px}
+
+  section{padding:52px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .eyebrow:before{content:"";width:26px;height:2px;background:var(--gold)}
+  .sec-title{font-family:var(--sora);font-weight:700;font-size:clamp(22px,3vw,30px);letter-spacing:-0.01em;margin-bottom:8px}
+  .sec-sub{color:var(--muted);max-width:680px;margin-bottom:24px}
+  .frame-cap{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin:30px 0 10px;display:flex;gap:8px;align-items:baseline}
+  .frame-cap b{color:var(--ink);font-family:var(--sora);font-weight:700;font-size:15px;letter-spacing:0}
+
+  .browser{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 20px 44px -24px rgba(15,35,80,0.45)}
+  .bbar{background:#E5E9F2;border-bottom:1px solid var(--line);padding:9px 14px;display:flex;align-items:center;gap:8px}
+  .bdot{width:11px;height:11px;border-radius:50%}
+  .burl{margin-left:12px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px 12px;font-family:var(--mono);font-size:11px;color:var(--muted);flex:1;max-width:360px}
+  .bbody{overflow-x:auto}
+
+  .dash{display:flex;min-width:880px;background:var(--bg)}
+  .side{width:212px;background:var(--navy);color:#fff;padding:16px 0;flex:none;display:flex;flex-direction:column;min-height:566px}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 18px 18px}
+  .brand .lm{width:34px;height:34px;border-radius:10px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:17px}
+  .brand .bt{font-family:var(--sora);font-weight:700;font-size:15px}
+  .brand .bs{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase}
+  .nav{display:flex;flex-direction:column;gap:2px;padding:6px 10px;flex:1}
+  .nav .ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:13px;color:rgba(255,255,255,0.72);font-weight:600}
+  .nav .ni .ndot{width:7px;height:7px;border-radius:2px;background:rgba(255,255,255,0.35);flex:none}
+  .nav .ni.active{background:rgba(237,177,62,0.18);color:#fff}
+  .nav .ni.active .ndot{background:var(--gold)}
+  .nav .navcat{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);padding:12px 12px 4px}
+  .who{padding:12px 16px;border-top:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:10px}
+  .who .wa{width:32px;height:32px;border-radius:9px;background:var(--navy-600);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700;font-size:12px}
+  .who .wn{font-size:12px;font-weight:700}
+  .who .wr{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+
+  .main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+  .topbar .tt{font-family:var(--sora);font-weight:700;font-size:18px}
+  .topbar .tsub{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
+  .topbar .tright{display:flex;align-items:center;gap:12px}
+  .tsearch{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 14px;font-family:var(--mono);font-size:11px;color:#9aa6bd;width:200px}
+  .tbtn{background:var(--navy);color:#fff;border-radius:9px;padding:9px 14px;font-size:12px;font-weight:700}
+  .tbtn.gold{background:var(--gold);color:var(--navy-700)}
+
+  .content{padding:22px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+  .kpi.accent{background:linear-gradient(135deg,var(--navy-600),var(--navy));border-color:var(--navy);color:#fff}
+  .kpi .k{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .kpi.accent .k{color:rgba(255,255,255,0.65)}
+  .kpi .v{font-family:var(--mono);font-weight:700;font-size:22px;margin-top:8px}
+  .kpi.accent .v{color:var(--gold)}
+  .kpi .d{font-size:10px;margin-top:6px;font-weight:700}
+  .kpi .d.up{color:var(--positive)}
+  .kpi .d.down{color:var(--negative)}
+  .kpi.accent .d{color:rgba(255,255,255,0.6)}
+
+  .grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-top:14px}
+  .grid2b{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+  .panel .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .panel .pt{font-family:var(--sora);font-weight:700;font-size:14px}
+  .panel .pa{font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:1px;text-transform:uppercase}
+
+  .bars{display:flex;align-items:flex-end;gap:7px;height:150px;padding-top:10px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%}
+  .bar .col{width:100%;background:var(--navy);border-radius:5px 5px 0 0}
+  .bar.hi .col{background:var(--gold)}
+  .bar .bl{font-family:var(--mono);font-size:8px;color:var(--muted)}
+
+  .lead{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .lead:last-child{border-bottom:none}
+  .lead .rank{font-family:var(--mono);font-weight:700;font-size:12px;color:var(--gold);width:20px}
+  .lead .la{width:32px;height:32px;border-radius:9px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700;font-size:12px}
+  .lead .ln{font-weight:700;font-size:12px}
+  .lead .lm2{font-family:var(--mono);font-size:9px;color:var(--muted)}
+  .lead .lv{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:12px;color:var(--positive)}
+
+  table{width:100%;border-collapse:collapse}
+  thead th{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:400}
+  tbody td{padding:11px 10px;border-bottom:1px solid var(--line);font-size:12px}
+  tbody tr:last-child td{border-bottom:none}
+  .cnum{font-family:var(--mono);font-weight:700}
+  .cname{font-weight:700}
+  .cmini{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .cidlock{font-family:var(--mono);font-size:10px;color:var(--navy);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 7px;display:inline-flex;align-items:center;gap:4px}
+  .cidlock .lk{width:5px;height:5px;border-radius:1px;background:var(--gold-deep)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:999px;font-weight:700}
+  .pill.active{background:#DFF3E8;color:var(--positive)}
+  .pill.pending{background:var(--gold-soft);color:var(--gold-deep)}
+  .pill.off{background:#EDEFF3;color:var(--muted)}
+  .pill.susp{background:#F8E1DA;color:var(--negative)}
+  .abtn{font-family:var(--manrope);font-weight:700;font-size:11px;padding:6px 11px;border-radius:8px;border:none;margin-right:5px}
+  .abtn.ok{background:var(--navy);color:#fff}
+  .abtn.no{background:#fff;border:1.5px solid var(--negative);color:var(--negative)}
+  .abtn.soft{background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+  .abtn.gold{background:var(--gold);color:var(--navy-700)}
+  .miniava{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:var(--gold-deep);display:inline-flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700;font-size:10px;vertical-align:middle;margin-right:9px}
+  .flagrow{background:#FCEEEA}
+  .flagnote{font-family:var(--mono);font-size:9px;color:var(--negative);letter-spacing:0.5px}
+
+  .permhead{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px;border-bottom:1px solid var(--line)}
+  .permhead div{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .permrow{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:12px 10px;border-bottom:1px solid var(--line);align-items:center}
+  .permrow:last-child{border-bottom:none}
+  .permrow .pl{font-size:12px;font-weight:700}
+  .tog{width:34px;height:19px;border-radius:999px;background:var(--line);position:relative}
+  .tog.on{background:var(--positive)}
+  .tog:after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff}
+  .tog.on:after{left:17px}
+
+  .audit{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .audit:last-child{border-bottom:none}
+  .audit .at{font-family:var(--mono);font-size:10px;color:var(--muted);width:74px;flex:none;padding-top:2px}
+  .audit .aicon{width:8px;height:8px;border-radius:2px;background:var(--gold);margin-top:6px;flex:none}
+  .audit .aw{font-weight:700;font-size:12px}
+  .audit .ad{font-size:11px;color:var(--muted);margin-top:1px}
+  .audit .ad b{font-family:var(--mono);color:var(--ink);font-weight:700}
+
+  .prog{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:6px}
+  .prog .pf{height:100%;background:var(--navy);border-radius:999px}
+  .prog .pf.gold{background:var(--gold)}
+
+  .reassign{background:var(--gold-soft);border:1px solid #E6D3A3;border-radius:12px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .reassign .ri{width:34px;height:34px;border-radius:9px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:14px;flex:none}
+  .reassign .rt{font-weight:700;font-size:12px;color:var(--navy-700)}
+  .reassign .rd{font-size:11px;color:var(--gold-deep);margin-top:1px}
+  .reassign .rb{margin-left:auto}
+
+  .note{background:var(--navy-700);color:#fff;border-radius:16px;padding:22px 24px;margin-top:44px}
+  .note h3{font-family:var(--sora);font-size:16px;margin-bottom:10px;color:var(--gold)}
+  .note ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .note li{font-size:14px;color:rgba(255,255,255,0.85);padding-left:20px;position:relative}
+  .note li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--gold)}
+  .foot{color:var(--muted);font-size:12px;font-family:var(--mono);text-align:center;margin-top:40px;letter-spacing:0.5px;line-height:1.7}
+</style>
+</head>
+
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="kicker">Neymar Savings // Web Dashboards v2 . Real rules</div>
+    <h1>One control room, two levels of access.</h1>
+    <p>The Super Admin governs the whole platform: people, permissions, money and the audit trail. The Admin runs the daily operation. Same web app, now in Neymar Savings navy and gold, with agent identity, the platform commission and the withdrawal floor built into the screens.</p>
+    <div class="tagrow">
+      <span class="tag">Next.js web</span>
+      <span class="tag">Immutable agent ID</span>
+      <span class="tag">Audit trail</span>
+      <span class="tag">Deploys to Vercel</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SUPER ADMIN -->
+  <section>
+    <div class="eyebrow">Super Admin</div>
+    <div class="sec-title">The full control room</div>
+    <div class="sec-sub">Live money position including platform commission, agent performance, approvals held to the withdrawal floor, governance, and a complete record of who did what.</div>
+
+    <!-- 1 OVERVIEW -->
+    <div class="frame-cap"><span>01</span><b>Overview and analytics</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/overview</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Control room</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni active"><span class="ndot"></span>Overview</div>
+            <div class="ni"><span class="ndot"></span>Customers</div>
+            <div class="ni"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+            <div class="navcat">Governance</div>
+            <div class="ni"><span class="ndot"></span>Admins</div>
+            <div class="ni"><span class="ndot"></span>Roles</div>
+            <div class="ni"><span class="ndot"></span>Audit log</div>
+            <div class="ni"><span class="ndot"></span>Settings</div>
+          </div>
+          <div class="who"><div class="wa">EN</div><div><div class="wn">E. Nwosu</div><div class="wr">Super Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Overview</div><div class="tsub">Sat 12 Jul 2026 . 09:41</div></div><div class="tright"><div class="tsearch">Search customers, agents</div><div class="tbtn">Export</div></div></div>
+          <div class="content">
+            <div class="kpis">
+              <div class="kpi"><div class="k">Total savings held</div><div class="v">NGN 48.2M</div><div class="d up">+2.4% this week</div></div>
+              <div class="kpi"><div class="k">Collected today</div><div class="v">NGN 1.31M</div><div class="d up">+8.1% vs avg</div></div>
+              <div class="kpi accent"><div class="k">Platform commission (Jul)</div><div class="v">NGN 3.41M</div><div class="d">Day-1 slots</div></div>
+              <div class="kpi"><div class="k">Agents on duty</div><div class="v">28 / 31</div><div class="d down">3 not reporting</div></div>
+            </div>
+            <div class="grid2">
+              <div class="panel">
+                <div class="ph"><div class="pt">Collections, last 13 days</div><div class="pa">NGN</div></div>
+                <div class="bars">
+                  <div class="bar"><div class="col" style="height:52%"></div><div class="bl">30</div></div>
+                  <div class="bar"><div class="col" style="height:61%"></div><div class="bl">01</div></div>
+                  <div class="bar"><div class="col" style="height:48%"></div><div class="bl">02</div></div>
+                  <div class="bar"><div class="col" style="height:70%"></div><div class="bl">03</div></div>
+                  <div class="bar"><div class="col" style="height:64%"></div><div class="bl">04</div></div>
+                  <div class="bar"><div class="col" style="height:40%"></div><div class="bl">05</div></div>
+                  <div class="bar"><div class="col" style="height:58%"></div><div class="bl">06</div></div>
+                  <div class="bar"><div class="col" style="height:72%"></div><div class="bl">07</div></div>
+                  <div class="bar"><div class="col" style="height:66%"></div><div class="bl">08</div></div>
+                  <div class="bar"><div class="col" style="height:55%"></div><div class="bl">09</div></div>
+                  <div class="bar"><div class="col" style="height:44%"></div><div class="bl">10</div></div>
+                  <div class="bar"><div class="col" style="height:69%"></div><div class="bl">11</div></div>
+                  <div class="bar hi"><div class="col" style="height:88%"></div><div class="bl">12</div></div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="ph"><div class="pt">Top agents today</div><div class="pa">See all</div></div>
+                <div class="lead"><span class="rank">1</span><span class="la">TB</span><div><div class="ln">Tunde Bello</div><div class="lm2">Balogun . 34 customers</div></div><span class="lv">NGN 46,000</span></div>
+                <div class="lead"><span class="rank">2</span><span class="la">FA</span><div><div class="ln">Fatima Aliyu</div><div class="lm2">Ring Road . 38</div></div><span class="lv">NGN 41,500</span></div>
+                <div class="lead"><span class="rank">3</span><span class="la">CO</span><div><div class="ln">Chuka Obi</div><div class="lm2">New Market . 40</div></div><span class="lv">NGN 38,200</span></div>
+                <div class="lead"><span class="rank">4</span><span class="la">RY</span><div><div class="ln">Rukayat Y.</div><div class="lm2">Station Rd . 22</div></div><span class="lv">NGN 29,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 2 AGENTS MANAGEMENT -->
+    <div class="frame-cap"><span>02</span><b>Agent management</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/agents</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Control room</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni"><span class="ndot"></span>Overview</div>
+            <div class="ni"><span class="ndot"></span>Customers</div>
+            <div class="ni active"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+            <div class="navcat">Governance</div>
+            <div class="ni"><span class="ndot"></span>Admins</div>
+            <div class="ni"><span class="ndot"></span>Roles</div>
+            <div class="ni"><span class="ndot"></span>Audit log</div>
+            <div class="ni"><span class="ndot"></span>Settings</div>
+          </div>
+          <div class="who"><div class="wa">EN</div><div><div class="wn">E. Nwosu</div><div class="wr">Super Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Agents</div><div class="tsub">31 agents . 4 locations</div></div><div class="tright"><div class="tsearch">Search by ID or name</div><div class="tbtn gold">Add agent</div></div></div>
+          <div class="content">
+            <div class="reassign">
+              <div class="ri">!</div>
+              <div><div class="rt">Suleiman U. (AGT-0389) is suspended</div><div class="rd">27 customers still assigned. Reassign them to keep collections running.</div></div>
+              <div class="rb"><button class="abtn gold">Reassign customers</button></div>
+            </div>
+            <div class="panel">
+              <table>
+                <thead><tr><th>Agent name</th><th>Agent ID</th><th>Location</th><th>Customers</th><th>Collected today</th><th>Status</th><th>Manage</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="miniava">TB</span><span class="cname">Tunde Bello</span></td><td><span class="cidlock"><span class="lk"></span>AGT-0421</span></td><td class="cmini">Balogun Market</td><td class="cnum">34</td><td class="cnum">NGN 46,000</td><td><span class="pill active">Active</span></td><td><button class="abtn soft">Edit name</button></td></tr>
+                  <tr><td><span class="miniava">FA</span><span class="cname">Fatima Aliyu</span></td><td><span class="cidlock"><span class="lk"></span>AGT-0405</span></td><td class="cmini">Ring Road</td><td class="cnum">38</td><td class="cnum">NGN 41,500</td><td><span class="pill active">Active</span></td><td><button class="abtn soft">Edit name</button></td></tr>
+                  <tr><td><span class="miniava">CO</span><span class="cname">Chuka Obi</span></td><td><span class="cidlock"><span class="lk"></span>AGT-0410</span></td><td class="cmini">New Market</td><td class="cnum">40</td><td class="cnum">NGN 38,200</td><td><span class="pill active">Active</span></td><td><button class="abtn soft">Edit name</button></td></tr>
+                  <tr class="flagrow"><td><span class="miniava">SU</span><span class="cname">Suleiman U.</span></td><td><span class="cidlock"><span class="lk"></span>AGT-0389</span></td><td class="cmini">Station Road</td><td class="cnum">27</td><td class="cnum" style="color:var(--muted)">NGN 0</td><td><span class="pill susp">Suspended</span></td><td><button class="abtn gold">Reassign</button><button class="abtn no">Terminate</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 3 ROLES -->
+    <div class="frame-cap"><span>03</span><b>Roles and permissions</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/roles</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Control room</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni"><span class="ndot"></span>Overview</div>
+            <div class="ni"><span class="ndot"></span>Customers</div>
+            <div class="ni"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+            <div class="navcat">Governance</div>
+            <div class="ni"><span class="ndot"></span>Admins</div>
+            <div class="ni active"><span class="ndot"></span>Roles</div>
+            <div class="ni"><span class="ndot"></span>Audit log</div>
+            <div class="ni"><span class="ndot"></span>Settings</div>
+          </div>
+          <div class="who"><div class="wa">EN</div><div><div class="wn">E. Nwosu</div><div class="wr">Super Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Roles and permissions</div><div class="tsub">Who can do what</div></div><div class="tright"><div class="tbtn gold">New role</div></div></div>
+          <div class="content">
+            <div class="panel">
+              <div class="permhead"><div>Permission</div><div>Agent</div><div>Admin</div><div>Super Admin</div></div>
+              <div class="permrow"><div class="pl">Record contributions</div><div class="tog on"></div><div class="tog on"></div><div class="tog on"></div></div>
+              <div class="permrow"><div class="pl">Register customers</div><div class="tog on"></div><div class="tog on"></div><div class="tog on"></div></div>
+              <div class="permrow"><div class="pl">See only own customers</div><div class="tog on"></div><div class="tog"></div><div class="tog"></div></div>
+              <div class="permrow"><div class="pl">Approve withdrawals</div><div class="tog"></div><div class="tog on"></div><div class="tog on"></div></div>
+              <div class="permrow"><div class="pl">Manage agents and reassign</div><div class="tog"></div><div class="tog on"></div><div class="tog on"></div></div>
+              <div class="permrow"><div class="pl">Manage admins</div><div class="tog"></div><div class="tog"></div><div class="tog on"></div></div>
+              <div class="permrow"><div class="pl">Change system settings</div><div class="tog"></div><div class="tog"></div><div class="tog on"></div></div>
+              <div class="permrow"><div class="pl">View audit log</div><div class="tog"></div><div class="tog"></div><div class="tog on"></div></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+<!-- 4 WITHDRAWALS -->
+    <div class="frame-cap"><span>04</span><b>Withdrawal approvals</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/withdrawals</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Control room</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni"><span class="ndot"></span>Overview</div>
+            <div class="ni"><span class="ndot"></span>Customers</div>
+            <div class="ni"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni active"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+            <div class="navcat">Governance</div>
+            <div class="ni"><span class="ndot"></span>Admins</div>
+            <div class="ni"><span class="ndot"></span>Roles</div>
+            <div class="ni"><span class="ndot"></span>Audit log</div>
+            <div class="ni"><span class="ndot"></span>Settings</div>
+          </div>
+          <div class="who"><div class="wa">EN</div><div><div class="wn">E. Nwosu</div><div class="wr">Super Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Withdrawals</div><div class="tsub">5 pending . floor NGN 2,000</div></div><div class="tright"><div class="tsearch">Filter by agent</div></div></div>
+          <div class="content">
+            <div class="panel">
+              <table>
+                <thead><tr><th>Customer</th><th>Card</th><th>Balance</th><th>Requested</th><th>Balance after</th><th>Agent</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="miniava">IB</span><span class="cname">Ibrahim Sani</span></td><td class="cmini">10188</td><td class="cnum">NGN 34,000</td><td class="cnum" style="color:var(--negative)">NGN 10,000</td><td class="cnum">NGN 24,000</td><td class="cmini">Tunde Bello</td><td><button class="abtn ok">Approve</button><button class="abtn no">Reject</button></td></tr>
+                  <tr><td><span class="miniava">FO</span><span class="cname">Funke Oladipo</span></td><td class="cmini">10501</td><td class="cnum">NGN 33,500</td><td class="cnum" style="color:var(--negative)">NGN 25,000</td><td class="cnum">NGN 8,500</td><td class="cmini">Fatima Aliyu</td><td><button class="abtn ok">Approve</button><button class="abtn no">Reject</button></td></tr>
+                  <tr class="flagrow"><td><span class="miniava">CE</span><span class="cname">Chidi Eze</span></td><td class="cmini">10442</td><td class="cnum">NGN 3,000</td><td class="cnum" style="color:var(--negative)">NGN 2,000</td><td class="cnum">NGN 1,000</td><td class="cmini">Chuka Obi</td><td><span class="flagnote">Blocked: below NGN 2,000 floor</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 5 AUDIT -->
+    <div class="frame-cap"><span>05</span><b>Audit log and activity</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/audit</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Control room</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni"><span class="ndot"></span>Overview</div>
+            <div class="ni"><span class="ndot"></span>Customers</div>
+            <div class="ni"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+            <div class="navcat">Governance</div>
+            <div class="ni"><span class="ndot"></span>Admins</div>
+            <div class="ni"><span class="ndot"></span>Roles</div>
+            <div class="ni active"><span class="ndot"></span>Audit log</div>
+            <div class="ni"><span class="ndot"></span>Settings</div>
+          </div>
+          <div class="who"><div class="wa">EN</div><div><div class="wn">E. Nwosu</div><div class="wr">Super Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Audit log</div><div class="tsub">Every sensitive action, recorded</div></div><div class="tright"><div class="tsearch">Filter by user</div><div class="tbtn">Export</div></div></div>
+          <div class="content">
+            <div class="panel">
+              <div class="audit"><div class="at">09:38</div><div class="aicon"></div><div><div class="aw">Withdrawal approved</div><div class="ad"><b>E. Nwosu</b> approved NGN 10,000 for card <b>10188</b>, floor respected</div></div></div>
+              <div class="audit"><div class="at">09:31</div><div class="aicon"></div><div><div class="aw">Agent name edited</div><div class="ad"><b>K. Bello</b> renamed <b>AGT-0389</b> to Suleiman U. (ID unchanged)</div></div></div>
+              <div class="audit"><div class="at">09:12</div><div class="aicon"></div><div><div class="aw">Customers reassigned</div><div class="ad"><b>E. Nwosu</b> moved 27 customers from <b>AGT-0389</b> to <b>AGT-0433</b></div></div></div>
+              <div class="audit"><div class="at">08:57</div><div class="aicon"></div><div><div class="aw">Withdrawal blocked</div><div class="ad">System blocked NGN 2,000 on card <b>10442</b>, would breach floor</div></div></div>
+              <div class="audit"><div class="at">08:40</div><div class="aicon"></div><div><div class="aw">Settings updated</div><div class="ad"><b>E. Nwosu</b> set platform slot to <b>day 1 of cycle</b></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ADMIN -->
+  <section>
+    <div class="eyebrow">Admin</div>
+    <div class="sec-title">The operational view</div>
+    <div class="sec-sub">Same app, narrower keys. The Admin has full reach over customers and agents to run the day, but the Governance group (Admins, Roles, Audit, Settings) is hidden, keeping the screen on the job.</div>
+
+    <!-- 6 DAILY MONITORING -->
+    <div class="frame-cap"><span>06</span><b>Daily collection monitoring</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/today</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Admin</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni active"><span class="ndot"></span>Today</div>
+            <div class="ni"><span class="ndot"></span>Customers</div>
+            <div class="ni"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Statements</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+          </div>
+          <div class="who"><div class="wa">KB</div><div><div class="wn">K. Bello</div><div class="wr">Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Today's collections</div><div class="tsub">Live . Sat 12 Jul 09:41</div></div><div class="tright"><div class="tsearch">Search customers</div></div></div>
+          <div class="content">
+            <div class="kpis">
+              <div class="kpi"><div class="k">Collected today</div><div class="v">NGN 1.31M</div><div class="d up">62% of target</div></div>
+              <div class="kpi"><div class="k">Customers paid</div><div class="v">1,842</div><div class="d up">of 2,980 due</div></div>
+              <div class="kpi"><div class="k">Withdrawals pending</div><div class="v">5</div><div class="d down">needs review</div></div>
+              <div class="kpi"><div class="k">Agents reporting</div><div class="v">28 / 31</div><div class="d down">3 silent</div></div>
+            </div>
+            <div class="panel" style="margin-top:14px">
+              <div class="ph"><div class="pt">Agent progress</div><div class="pa">Live</div></div>
+              <table>
+                <thead><tr><th>Agent</th><th>Location</th><th>Collected</th><th>Customers</th><th>Progress</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="miniava">TB</span><span class="cname">Tunde Bello</span></td><td class="cmini">Balogun Mkt</td><td class="cnum">NGN 46,000</td><td class="cnum">34 / 34</td><td style="width:150px"><div class="prog"><div class="pf" style="width:100%"></div></div></td><td><span class="pill active">Done</span></td></tr>
+                  <tr><td><span class="miniava">FA</span><span class="cname">Fatima Aliyu</span></td><td class="cmini">Ring Road</td><td class="cnum">NGN 41,500</td><td class="cnum">29 / 38</td><td><div class="prog"><div class="pf" style="width:76%"></div></div></td><td><span class="pill pending">On route</span></td></tr>
+                  <tr><td><span class="miniava">CO</span><span class="cname">Chuka Obi</span></td><td class="cmini">New Market</td><td class="cnum">NGN 38,200</td><td class="cnum">31 / 40</td><td><div class="prog"><div class="pf gold" style="width:78%"></div></div></td><td><span class="pill pending">On route</span></td></tr>
+                  <tr><td><span class="miniava">SU</span><span class="cname">Suleiman U.</span></td><td class="cmini">Station Rd</td><td class="cnum" style="color:var(--muted)">NGN 0</td><td class="cnum">0 / 27</td><td><div class="prog"><div class="pf" style="width:2%"></div></div></td><td><span class="pill off">Not reporting</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 7 CUSTOMER DETAIL -->
+    <div class="frame-cap"><span>07</span><b>Customer management and statement</b></div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/customers/10293</span></div>
+      <div class="bbody"><div class="dash">
+        <div class="side">
+          <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Admin</div></div></div>
+          <div class="nav">
+            <div class="navcat">Operations</div>
+            <div class="ni"><span class="ndot"></span>Today</div>
+            <div class="ni active"><span class="ndot"></span>Customers</div>
+            <div class="ni"><span class="ndot"></span>Agents</div>
+            <div class="ni"><span class="ndot"></span>Contributions</div>
+            <div class="ni"><span class="ndot"></span>Withdrawals</div>
+            <div class="ni"><span class="ndot"></span>Statements</div>
+            <div class="ni"><span class="ndot"></span>Reports</div>
+          </div>
+          <div class="who"><div class="wa">KB</div><div><div class="wn">K. Bello</div><div class="wr">Admin</div></div></div>
+        </div>
+        <div class="main">
+          <div class="topbar"><div><div class="tt">Amaka Okonkwo</div><div class="tsub">Card 10293 . Agent Tunde Bello (AGT-0421)</div></div><div class="tright"><div class="tbtn">Download statement</div></div></div>
+          <div class="content">
+            <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+              <div class="kpi"><div class="k">Balance</div><div class="v" style="color:var(--navy)">NGN 10,000</div></div>
+              <div class="kpi"><div class="k">Available</div><div class="v" style="color:var(--positive)">NGN 8,000</div></div>
+              <div class="kpi"><div class="k">Locked (2 daily)</div><div class="v" style="color:var(--gold-deep)">NGN 2,000</div></div>
+              <div class="kpi"><div class="k">Commission paid</div><div class="v">NGN 3,000</div></div>
+            </div>
+            <div class="grid2b">
+              <div class="panel">
+                <div class="ph"><div class="pt">Recent activity</div><div class="pa">All</div></div>
+                <table><tbody>
+                  <tr><td class="cmini">12 Jul</td><td class="cname">Contribution</td><td class="cnum" style="color:var(--positive)">+1,000</td></tr>
+                  <tr><td class="cmini">11 Jul</td><td class="cname">Contribution</td><td class="cnum" style="color:var(--positive)">+1,000</td></tr>
+                  <tr><td class="cmini">01 Jul</td><td class="cname">Platform slot</td><td class="cnum" style="color:var(--gold-deep)">-1,000</td></tr>
+                  <tr><td class="cmini">28 Jun</td><td class="cname">Withdrawal</td><td class="cnum" style="color:var(--negative)">-5,000</td></tr>
+                </tbody></table>
+              </div>
+              <div class="panel">
+                <div class="ph"><div class="pt">Customer record</div><div class="pa">Edit</div></div>
+                <table><tbody>
+                  <tr><td class="cmini">Business</td><td class="cname" style="text-align:right">Provisions trader</td></tr>
+                  <tr><td class="cmini">Phone</td><td class="cname" style="text-align:right">0803 xxx 4471</td></tr>
+                  <tr><td class="cmini">Business address</td><td class="cname" style="text-align:right">14 Balogun St, Lagos</td></tr>
+                  <tr><td class="cmini">Registered</td><td class="cname" style="text-align:right">02 May 2026</td></tr>
+                  <tr><td class="cmini">Daily amount</td><td class="cnum" style="text-align:right">NGN 1,000</td></tr>
+                </tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+  <div class="note">
+    <h3>What v2 locks in</h3>
+    <ul>
+      <li>Neymar Savings navy and gold across both dashboards, matching the two mobile apps exactly.</li>
+      <li>Agent identity is real: the Agent ID is locked (shown with a lock chip), the name is editable by Admin and Super Admin, and a suspended or terminated agent triggers a customer-reassignment flow instead of a delete.</li>
+      <li>Money rules are enforced on screen: platform commission is tracked as its own figure, and withdrawals that would breach the two-contribution floor are blocked, not just discouraged, with the block itself recorded in the audit log.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    Design phase complete: Agent app, Customer app, Admin and Super Admin dashboards, all in one Neymar Savings system.<br>
+    Neymar Savings, a subsidiary of Neymar Nig. Ltd. RC 7803876 . NIWA Ferry Terminal Complex, Outer-Marina, CMS, Lagos<br>
+    Confirm with client: logo artwork, exact daily-amount options. Domain to be finalised before go-live.
+  </div>
+
+</div>
+
+</body>
+</html>

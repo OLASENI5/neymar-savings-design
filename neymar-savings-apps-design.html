@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neymar Savings - Apps Design v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2350;--navy-600:#17346F;--navy-700:#0A1734;
+    --blue:#2450C8;
+    --gold:#EDB13E;--gold-soft:#FBEAC4;--gold-deep:#B9832A;
+    --bg:#EEF1F7;--card:#FFFFFF;--ink:#14203A;--muted:#5E6B84;--line:#DCE2EE;
+    --positive:#1E8A5A;--negative:#C0492E;--paper:#FBF9F1;
+    --sora:'Sora',system-ui,sans-serif;--manrope:'Manrope',system-ui,sans-serif;--mono:'Space Mono','Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--manrope);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  .masthead{background:var(--navy);color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
+  .masthead:before{content:"";position:absolute;right:-120px;top:-120px;width:360px;height:360px;background:radial-gradient(circle, rgba(237,177,62,0.22), transparent 68%)}
+  .masthead:after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(180deg,transparent,rgba(237,177,62,0.10))}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .masthead h1{font-family:var(--sora);font-weight:800;font-size:clamp(30px,5vw,50px);line-height:1.04;letter-spacing:-0.02em;max-width:780px}
+  .masthead p{margin-top:18px;max-width:660px;color:rgba(255,255,255,0.82);font-size:16px}
+  .tagrow{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.28);padding:6px 12px;border-radius:999px}
+
+  section{padding:52px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .eyebrow:before{content:"";width:26px;height:2px;background:var(--gold)}
+  .sec-title{font-family:var(--sora);font-weight:700;font-size:clamp(22px,3vw,30px);letter-spacing:-0.01em;margin-bottom:8px}
+  .sec-sub{color:var(--muted);max-width:660px;margin-bottom:28px}
+
+  .screens{display:flex;flex-wrap:wrap;gap:34px 26px;justify-content:flex-start}
+  .device-wrap{width:300px}
+  .device-cap{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;gap:8px;align-items:baseline}
+  .device-cap b{color:var(--ink);font-family:var(--sora);font-weight:700;font-size:14px;letter-spacing:0}
+  .phone{width:300px;height:640px;background:#000;border-radius:36px;padding:9px;box-shadow:0 24px 48px -20px rgba(15,35,80,0.5)}
+  .screen{width:100%;height:100%;background:var(--bg);border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .status{height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-family:var(--mono);font-size:10px;color:var(--ink);flex:none}
+  .status.on-navy{color:rgba(255,255,255,0.9)}
+  .sc-body{flex:1;overflow:hidden;display:flex;flex-direction:column}
+  .sc-scroll{flex:1;overflow:hidden;padding:0 16px 16px}
+
+  .appbar{background:var(--navy);color:#fff;padding:14px 16px 20px;flex:none}
+  .appbar .hi{font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--mono);letter-spacing:1px;text-transform:uppercase}
+  .appbar .who{font-family:var(--sora);font-weight:700;font-size:18px;margin-top:2px}
+
+  .balance-card{background:linear-gradient(135deg,var(--navy-600),var(--navy));color:#fff;border-radius:18px;padding:18px;margin-top:-16px;position:relative;overflow:hidden;border:1px solid rgba(237,177,62,0.25)}
+  .balance-card:after{content:"";position:absolute;right:-30px;bottom:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(237,177,62,0.28),transparent 70%)}
+  .bc-label{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.65)}
+  .bc-amt{font-family:var(--mono);font-weight:700;font-size:30px;margin-top:5px}
+  .bc-split{display:flex;gap:14px;margin-top:12px;position:relative;z-index:1}
+  .bc-split .s{flex:1}
+  .bc-split .sk{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+  .bc-split .sv{font-family:var(--mono);font-weight:700;font-size:13px;margin-top:3px}
+  .bc-split .sv.gold{color:var(--gold)}
+  .streak{display:inline-flex;align-items:center;gap:5px;background:rgba(237,177,62,0.16);border:1px solid rgba(237,177,62,0.4);color:var(--gold);font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:999px;letter-spacing:0.5px}
+
+  .qactions{display:flex;gap:10px;margin-top:14px}
+  .qa{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center}
+  .qa .ic{width:34px;height:34px;border-radius:10px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-family:var(--sora);font-weight:800;font-size:15px}
+  .qa .t{font-size:11px;font-weight:700}
+
+  .sec-h{font-family:var(--sora);font-weight:700;font-size:13px;margin:18px 2px 10px;display:flex;justify-content:space-between;align-items:center}
+  .sec-h a{font-family:var(--mono);font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:1px}
+
+  .lrow{background:#fff;border:1px solid var(--line);border-radius:13px;padding:11px 12px;display:flex;align-items:center;gap:11px;margin-bottom:9px}
+  .avatar{width:38px;height:38px;border-radius:10px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700;font-size:14px;flex:none}
+  .licon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:10px;flex:none}
+  .licon.in{background:#DFF3E8;color:var(--positive)}
+  .licon.out{background:#F8E1DA;color:var(--negative)}
+  .licon.fee{background:var(--gold-soft);color:var(--gold-deep)}
+  .lrow .nm{font-weight:700;font-size:13px}
+  .lrow .meta{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:0.5px}
+  .lrow .amt{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:13px}
+  .lrow .amt.pos{color:var(--positive)}
+  .lrow .amt.neg{color:var(--negative)}
+  .lrow .amt.fee{color:var(--gold-deep)}
+
+  .tabbar{flex:none;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 0 12px}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9px;color:var(--muted);font-family:var(--mono);letter-spacing:0.5px}
+  .tab .dot{width:20px;height:20px;border-radius:7px;background:var(--line)}
+  .tab.active{color:var(--navy)}
+  .tab.active .dot{background:var(--navy)}
+
+  .btn{font-family:var(--manrope);font-weight:700;font-size:15px;padding:14px 18px;border-radius:12px;border:none;text-align:center}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-gold{background:var(--gold);color:var(--navy-700)}
+  .btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+
+  /* login */
+  .login{background:var(--navy);height:100%;display:flex;flex-direction:column}
+  .login .brandtop{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;padding:24px}
+  .logo-mark{width:66px;height:66px;border-radius:19px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:28px;margin-bottom:16px;position:relative}
+  .logo-mark:after{content:"";position:absolute;left:8px;right:8px;bottom:-4px;height:8px;border-radius:0 0 12px 12px;background:rgba(255,255,255,0.15)}
+  .login h2{font-family:var(--sora);font-weight:800;font-size:23px}
+  .login .lp{color:rgba(255,255,255,0.72);font-size:11px;margin-top:8px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase}
+  .login-sheet{background:var(--bg);border-radius:26px 26px 0 0;padding:22px 18px 26px}
+  .login-sheet .lbl{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 6px 2px}
+  .inp{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-size:14px;color:var(--ink);margin-bottom:14px;font-weight:600}
+  .inp.ph{color:#9aa6bd;font-weight:500}
+  .otp-row{display:flex;gap:9px;justify-content:space-between;margin-bottom:16px}
+  .otp{flex:1;aspect-ratio:1;background:#fff;border:1.5px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:20px;color:var(--navy)}
+  .otp.filled{border-color:var(--navy)}
+
+  /* passbook */
+  .passbook{background:var(--paper);border:1px solid #EADFC4;border-radius:16px;padding:14px;margin-top:4px}
+  .pb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .pb-title{font-family:var(--sora);font-weight:700;font-size:13px}
+  .pb-cyc{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px}
+  .pb-legend{display:flex;gap:12px;margin-bottom:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+  .lg .sq{width:9px;height:9px;border-radius:3px}
+  .pb-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  .cell{aspect-ratio:1;border-radius:8px;border:1px dashed #D6C79E;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+  .cell .d{font-family:var(--mono);font-size:8px;color:#B9A876}
+  .cell .m{font-family:var(--mono);font-size:7px;font-weight:700;color:var(--muted)}
+  .cell.paid{background:var(--navy);border:1px solid var(--navy)}
+  .cell.paid .d{color:rgba(255,255,255,0.55)}
+  .cell.paid .m{color:var(--gold)}
+  .cell.fee{background:var(--gold);border:1px solid var(--gold-deep)}
+  .cell.fee .d{color:var(--navy-700)}
+  .cell.fee .m{color:var(--navy-700);font-size:6px}
+  .cell.today{border:2px solid var(--gold);background:var(--gold-soft)}
+  .cell.today .d{color:var(--gold-deep)}
+  .cell.today .m{color:var(--navy)}
+
+  /* amount / save */
+  .amt-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center;margin-top:16px}
+  .amt-box .k{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .amt-box .big{font-family:var(--mono);font-weight:700;font-size:32px;color:var(--navy);margin-top:6px}
+  .quickrow{display:flex;gap:8px;margin-top:14px}
+  .quick{flex:1;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:10px 0;text-align:center;font-family:var(--mono);font-weight:700;font-size:12px;color:var(--navy)}
+  .quick.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .pay-opt{background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:13px 14px;display:flex;align-items:center;gap:12px;margin-top:10px}
+  .pay-opt.sel{border-color:var(--navy);background:#F4F6FC}
+  .pay-ic{width:36px;height:36px;border-radius:9px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:13px;flex:none}
+  .pay-opt .pt{font-weight:700;font-size:13px}
+  .pay-opt .ps{font-size:10px;color:var(--muted);font-family:var(--mono)}
+  .pay-opt .radio{margin-left:auto;width:18px;height:18px;border-radius:50%;border:2px solid var(--line)}
+  .pay-opt.sel .radio{border-color:var(--navy);background:var(--navy);box-shadow:inset 0 0 0 3px #fff}
+
+  /* form */
+  .fgroup{margin-bottom:12px}
+  .fgroup .fl{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 5px 2px}
+  .fin{background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:11px 13px;font-size:13px;font-weight:600}
+  .fin.ph{color:#9aa6bd;font-weight:500}
+  .fin.locked{background:#F1F3F8;color:var(--muted)}
+  .frow2{display:flex;gap:10px}
+  .frow2 .fgroup{flex:1}
+  .passport{border:1.5px dashed var(--line);border-radius:11px;height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase}
+  .passport .pc{width:26px;height:26px;border-radius:8px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:13px}
+  .agent-bind{background:var(--navy);color:#fff;border-radius:12px;padding:12px 13px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .agent-bind .ab-ic{width:32px;height:32px;border-radius:9px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:13px}
+  .agent-bind .abt{font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--mono);letter-spacing:0.5px;text-transform:uppercase}
+  .agent-bind .abv{font-weight:700;font-size:13px}
+
+  /* withdrawal math */
+  .wmath{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+  .wrow{display:flex;justify-content:space-between;padding:7px 0;font-size:12px;border-bottom:1px solid var(--line)}
+  .wrow:last-child{border-bottom:none}
+  .wrow .wk{color:var(--muted)}
+  .wrow .wv{font-family:var(--mono);font-weight:700}
+  .wrow.locked .wv{color:var(--gold-deep)}
+  .wrow.total{padding-top:11px;margin-top:4px;border-top:2px solid var(--navy);border-bottom:none}
+  .wrow.total .wk{font-weight:800;color:var(--navy)}
+  .wrow.total .wv{font-size:16px;color:var(--positive)}
+  .wnote{background:var(--gold-soft);border-radius:10px;padding:9px 11px;margin-top:12px;font-size:10px;color:var(--gold-deep);font-family:var(--mono);line-height:1.5}
+
+  /* analysis */
+  .astat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+  .astat .ai{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:13px;flex:none}
+  .astat .ak{font-size:11px;color:var(--muted);font-weight:600}
+  .astat .av{font-family:var(--mono);font-weight:700;font-size:16px;margin-top:1px}
+  .prog{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:8px}
+  .prog .pf{height:100%;background:var(--navy);border-radius:999px}
+  .prog .pf.gold{background:var(--gold)}
+
+  /* receipt */
+  .receipt{background:#fff;border-radius:16px;border:1px solid var(--line);margin-top:12px;overflow:hidden}
+  .receipt .rhead{background:var(--positive);color:#fff;padding:18px;text-align:center}
+  .receipt .rhead .ok{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-family:var(--sora);font-weight:800;font-size:15px}
+  .receipt .rhead .rt{font-family:var(--sora);font-weight:700;font-size:15px}
+  .receipt .rhead .ra{font-family:var(--mono);font-weight:700;font-size:24px;margin-top:4px}
+  .rline{display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px dashed var(--line);font-size:12px}
+  .rline .rk{color:var(--muted)}
+  .rline .rv{font-family:var(--mono);font-weight:700}
+  .rfoot{padding:14px 16px}
+
+  .seg{display:flex;background:#E1E6F1;border-radius:11px;padding:4px;margin-top:0}
+  .seg div{flex:1;text-align:center;font-size:11px;font-weight:700;padding:8px 0;border-radius:8px;color:var(--muted)}
+  .seg div.on{background:#fff;color:var(--navy)}
+
+  .note{background:var(--navy-700);color:#fff;border-radius:16px;padding:22px 24px;margin-top:44px}
+  .note h3{font-family:var(--sora);font-size:16px;margin-bottom:10px;color:var(--gold)}
+  .note ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .note li{font-size:14px;color:rgba(255,255,255,0.85);padding-left:20px;position:relative}
+  .note li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--gold)}
+  .foot{color:var(--muted);font-size:12px;font-family:var(--mono);text-align:center;margin-top:40px;letter-spacing:0.5px;line-height:1.7}
+</style>
+</head>
+
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="kicker">Neymar Savings // Apps Design v2 . Real rules</div>
+    <h1>Banking for the trader who was never in a bank.</h1>
+    <p>Neymar Savings turns the daily contribution card into an app the agent and the customer both trust. Navy and gold carried over from the card people already hold. This pass builds in the real money rules: a 31-day cycle, the monthly platform slot, and the two-contribution withdrawal floor.</p>
+    <div class="tagrow">
+      <span class="tag">Neymar Savings</span>
+      <span class="tag">31-day cycle</span>
+      <span class="tag">Location agents</span>
+      <span class="tag">Full transparency</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- AGENT APP -->
+  <section>
+    <div class="eyebrow">Agent App</div>
+    <div class="sec-title">The collector's tool</div>
+    <div class="sec-sub">An agent sees only the customers bound to their ID. They register new savers, stamp the daily contribution, and cap withdrawals at the two-contribution floor without doing the math by hand.</div>
+
+    <div class="screens">
+
+      <!-- 1 SIGN IN -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>01</span><b>Sign in</b></div>
+        <div class="phone"><div class="screen">
+          <div class="login">
+            <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+            <div class="brandtop">
+              <div class="logo-mark">N</div>
+              <h2>Neymar Savings</h2>
+              <div class="lp">Agent Collection</div>
+            </div>
+            <div class="login-sheet">
+              <div class="lbl">Agent ID</div>
+              <div class="inp">AGT-0421</div>
+              <div class="lbl">Passcode</div>
+              <div class="inp ph">Enter 6-digit passcode</div>
+              <div class="btn btn-gold" style="margin-top:4px">Sign in</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 2 TODAY -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>02</span><b>Today</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar">
+              <div class="hi">Balogun Market . AGT-0421</div>
+              <div class="who">Tunde Bello</div>
+              <div class="balance-card">
+                <div class="bc-label">Collected today</div>
+                <div class="bc-amt">NGN 46,000</div>
+                <div class="bc-split">
+                  <div class="s"><div class="sk">My customers</div><div class="sv">34</div></div>
+                  <div class="s"><div class="sk">Collected</div><div class="sv gold">18</div></div>
+                  <div class="s"><div class="sk">Due</div><div class="sv">16</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="sc-scroll">
+              <div class="sec-h">Due for collection <a>See all</a></div>
+              <div class="lrow">
+                <div class="avatar">AO</div>
+                <div><div class="nm">Amaka Okonkwo</div><div class="meta">CARD 10293</div></div>
+                <div class="amt">NGN 1,000</div>
+              </div>
+              <div class="lrow">
+                <div class="avatar">IB</div>
+                <div><div class="nm">Ibrahim Sani</div><div class="meta">CARD 10188</div></div>
+                <div class="amt">NGN 500</div>
+              </div>
+              <div class="lrow">
+                <div class="avatar">CE</div>
+                <div><div class="nm">Chidi Eze</div><div class="meta">CARD 10442</div></div>
+                <div class="amt">NGN 2,000</div>
+              </div>
+              <div class="btn btn-ghost" style="margin-top:4px">Register new customer</div>
+            </div>
+            <div class="tabbar">
+              <div class="tab active"><div class="dot"></div>Today</div>
+              <div class="tab"><div class="dot"></div>Customers</div>
+              <div class="tab"><div class="dot"></div>Collect</div>
+              <div class="tab"><div class="dot"></div>History</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <!-- 3 REGISTER -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>03</span><b>Register customer</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar"><div class="who">New customer</div></div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="agent-bind">
+                <div class="ab-ic">TB</div>
+                <div><div class="abt">Preferred agent</div><div class="abv">Tunde Bello . AGT-0421</div></div>
+              </div>
+              <div class="frow2">
+                <div class="fgroup"><div class="fl">First name</div><div class="fin">Amaka</div></div>
+                <div class="fgroup"><div class="fl">Surname</div><div class="fin">Okonkwo</div></div>
+              </div>
+              <div class="fgroup"><div class="fl">Phone number</div><div class="fin ph">0803 000 0000</div></div>
+              <div class="fgroup"><div class="fl">Business</div><div class="fin ph">e.g. Provisions trader</div></div>
+              <div class="fgroup"><div class="fl">Business address</div><div class="fin ph">Shop / stall address</div></div>
+              <div class="frow2">
+                <div class="fgroup"><div class="fl">Daily amount</div><div class="fin">NGN 1,000</div></div>
+                <div class="fgroup"><div class="fl">Passport</div><div class="passport"><div class="pc">+</div>Add photo</div></div>
+              </div>
+              <div class="btn btn-gold" style="margin-top:4px">Create card and issue</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 4 PASSBOOK -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>04</span><b>Digital passbook</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar">
+              <div class="hi">Customer . CARD 10293</div>
+              <div class="who">Amaka Okonkwo</div>
+              <div class="balance-card">
+                <div class="bc-label">Savings balance</div>
+                <div class="bc-amt">NGN 10,000</div>
+                <div class="bc-split">
+                  <div class="s"><div class="sk">Saved</div><div class="sv">10,000</div></div>
+                  <div class="s"><div class="sk">Platform slot</div><div class="sv gold">1,000</div></div>
+                  <div class="s"><div class="sk">Daily</div><div class="sv">1,000</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="sc-scroll">
+              <div class="passbook">
+                <div class="pb-top"><div class="pb-title">Cycle 3</div><div class="pb-cyc">11 of 31</div></div>
+                <div class="pb-legend">
+                  <div class="lg"><span class="sq" style="background:var(--navy)"></span>Saved</div>
+                  <div class="lg"><span class="sq" style="background:var(--gold)"></span>Platform</div>
+                  <div class="lg"><span class="sq" style="background:#fff;border:1px dashed #D6C79E"></span>Open</div>
+                </div>
+                <div class="pb-grid">
+                  <div class="cell fee"><span class="d">01</span><span class="m">PLT</span></div>
+                  <div class="cell paid"><span class="d">02</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">03</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">04</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">05</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">06</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">07</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">08</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">09</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">10</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">11</span><span class="m">1k</span></div>
+                  <div class="cell today"><span class="d">12</span><span class="m">now</span></div>
+                </div>
+              </div>
+              <div class="btn btn-gold" style="margin-top:14px">Collect today . NGN 1,000</div>
+              <div class="btn btn-ghost" style="margin-top:10px">Record withdrawal</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 5 COLLECT -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>05</span><b>Record contribution</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar" style="padding-bottom:16px">
+              <div style="display:flex;align-items:center;gap:11px">
+                <div class="avatar" style="background:rgba(255,255,255,0.14);color:#fff">AO</div>
+                <div><div class="who" style="font-size:16px">Amaka Okonkwo</div><div class="hi">CARD 10293</div></div>
+              </div>
+            </div>
+            <div class="sc-scroll" style="padding-top:16px">
+              <div class="amt-box">
+                <div class="k">Contribution amount</div>
+                <div class="big">NGN 1,000</div>
+              </div>
+              <div class="quickrow">
+                <div class="quick sel">1,000</div>
+                <div class="quick">2,000</div>
+                <div class="quick">Other</div>
+              </div>
+              <div class="fgroup" style="margin-top:14px"><div class="fl">Payment method</div><div class="fin">Cash</div></div>
+              <div class="btn btn-navy" style="margin-top:6px">Save contribution</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 6 WITHDRAWAL -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>06</span><b>Record withdrawal</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar" style="background:var(--negative);padding-bottom:16px">
+              <div style="display:flex;align-items:center;gap:11px">
+                <div class="avatar" style="background:rgba(255,255,255,0.16);color:#fff">AO</div>
+                <div><div class="who" style="font-size:16px">Amaka Okonkwo</div><div class="hi" style="color:rgba(255,255,255,0.8)">CARD 10293</div></div>
+              </div>
+            </div>
+            <div class="sc-scroll" style="padding-top:16px">
+              <div class="wmath">
+                <div class="wrow"><span class="wk">Savings balance</span><span class="wv">NGN 10,000</span></div>
+                <div class="wrow locked"><span class="wk">Must stay (2 x daily)</span><span class="wv">- NGN 2,000</span></div>
+                <div class="wrow total"><span class="wk">Available to withdraw</span><span class="wv">NGN 8,000</span></div>
+              </div>
+              <div class="amt-box" style="margin-top:12px">
+                <div class="k">Withdrawal amount</div>
+                <div class="big" style="color:var(--negative)">NGN 8,000</div>
+              </div>
+              <div class="wnote">Neymar Savings keeps two daily contributions in every account. This customer cannot go below NGN 2,000.</div>
+              <div class="btn" style="margin-top:14px;background:var(--negative);color:#fff">Record withdrawal</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUSTOMER APP -->
+  <section>
+    <div class="eyebrow">Customer App</div>
+    <div class="sec-title">The saver's view</div>
+    <div class="sec-sub">The customer sees exactly where every naira sits: what is saved, what went to the platform, what they can take today, and what stays locked. Nothing hidden, per the transparency the CEO asked for.</div>
+
+    <div class="screens">
+
+      <!-- 1 SIGN IN -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>01</span><b>Sign in</b></div>
+        <div class="phone"><div class="screen">
+          <div class="login">
+            <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+            <div class="brandtop">
+              <div class="logo-mark">N</div>
+              <h2>Neymar Savings</h2>
+              <div class="lp">Save daily, bank freely</div>
+            </div>
+            <div class="login-sheet">
+              <div class="lbl">Verify your phone</div>
+              <div class="inp">0803 xxx 4471</div>
+              <div class="lbl" style="margin-top:4px">Enter the 6-digit code</div>
+              <div class="otp-row">
+                <div class="otp filled">4</div><div class="otp filled">2</div><div class="otp filled">9</div>
+                <div class="otp"></div><div class="otp"></div><div class="otp"></div>
+              </div>
+              <div class="btn btn-gold">Continue</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <!-- 2 HOME -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>02</span><b>Home</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar">
+              <div class="hi">Welcome back</div>
+              <div class="who">Amaka</div>
+              <div class="balance-card">
+                <div class="bc-label">Savings balance</div>
+                <div class="bc-amt">NGN 10,000</div>
+                <div class="bc-split">
+                  <div class="s"><div class="sk">Available</div><div class="sv gold">8,000</div></div>
+                  <div class="s"><div class="sk">Locked</div><div class="sv">2,000</div></div>
+                  <div class="s"><div class="sk">Streak</div><div class="sv">11 days</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="sc-scroll">
+              <div class="qactions">
+                <div class="qa"><div class="ic">+</div><div class="t">Add money</div></div>
+                <div class="qa"><div class="ic">%</div><div class="t">Analysis</div></div>
+                <div class="qa"><div class="ic">S</div><div class="t">Statement</div></div>
+              </div>
+              <div class="sec-h">Cycle 3</div>
+              <div class="passbook">
+                <div class="pb-top"><div class="pb-title">Your card 10293</div><div class="pb-cyc">11 of 31</div></div>
+                <div class="pb-grid">
+                  <div class="cell fee"><span class="d">01</span><span class="m">PLT</span></div>
+                  <div class="cell paid"><span class="d">02</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">03</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">04</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">05</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">06</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">07</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">08</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">09</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">10</span><span class="m">1k</span></div>
+                  <div class="cell paid"><span class="d">11</span><span class="m">1k</span></div>
+                  <div class="cell today"><span class="d">12</span><span class="m">pay</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="tabbar">
+              <div class="tab active"><div class="dot"></div>Home</div>
+              <div class="tab"><div class="dot"></div>Save</div>
+              <div class="tab"><div class="dot"></div>History</div>
+              <div class="tab"><div class="dot"></div>Profile</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 3 ANALYSIS -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>03</span><b>Account analysis</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar"><div class="who">Account analysis</div><div class="hi">Cycle 3 . card 10293</div></div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="astat">
+                <div class="ai" style="background:var(--gold-soft);color:var(--gold-deep)">S</div>
+                <div style="flex:1"><div class="ak">Total contributed this cycle</div><div class="av">NGN 11,000</div></div>
+              </div>
+              <div class="astat">
+                <div class="ai" style="background:#DFF3E8;color:var(--positive)">B</div>
+                <div style="flex:1"><div class="ak">Your savings balance</div><div class="av" style="color:var(--positive)">NGN 10,000</div></div>
+              </div>
+              <div class="astat">
+                <div class="ai" style="background:var(--gold-soft);color:var(--gold-deep)">P</div>
+                <div style="flex:1"><div class="ak">Platform slot (day 1)</div><div class="av">NGN 1,000</div></div>
+              </div>
+              <div class="astat" style="flex-direction:column;align-items:stretch;gap:0">
+                <div style="display:flex;justify-content:space-between"><div class="ak">Available NGN 8,000</div><div class="ak">Locked NGN 2,000</div></div>
+                <div class="prog"><div class="pf gold" style="width:80%"></div></div>
+              </div>
+              <div class="astat" style="flex-direction:column;align-items:stretch;gap:0">
+                <div style="display:flex;justify-content:space-between"><div class="ak">Cycle progress</div><div class="ak" style="font-family:var(--mono)">11 / 31</div></div>
+                <div class="prog"><div class="pf" style="width:35%"></div></div>
+              </div>
+              <div class="astat">
+                <div class="ai" style="background:var(--navy);color:#fff">TB</div>
+                <div style="flex:1"><div class="ak">Your agent</div><div class="av" style="font-size:13px">Tunde Bello . AGT-0421</div></div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 4 ADD MONEY -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>04</span><b>Add money</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar"><div class="who">Add to savings</div></div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="amt-box"><div class="k">Amount to save</div><div class="big">NGN 1,000</div></div>
+              <div class="quickrow">
+                <div class="quick sel">1,000</div>
+                <div class="quick">2,000</div>
+                <div class="quick">5,000</div>
+              </div>
+              <div class="sec-h" style="margin-bottom:6px">Pay with</div>
+              <div class="pay-opt sel">
+                <div class="pay-ic">C</div>
+                <div><div class="pt">Debit card</div><div class="ps">Instant</div></div>
+                <div class="radio"></div>
+              </div>
+              <div class="pay-opt">
+                <div class="pay-ic">B</div>
+                <div><div class="pt">Bank transfer</div><div class="ps">One-time account number</div></div>
+                <div class="radio"></div>
+              </div>
+              <div class="btn btn-gold" style="margin-top:16px">Pay NGN 1,000</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 5 HISTORY -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>05</span><b>History</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar">
+              <div class="who">Activity</div>
+              <div class="seg" style="margin-top:12px">
+                <div class="on">All</div><div>Saved</div><div>Withdrawn</div>
+              </div>
+            </div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="lrow">
+                <div class="licon in">IN</div>
+                <div><div class="nm">Daily contribution</div><div class="meta">12 JUL . DEBIT CARD</div></div>
+                <div class="amt pos">+1,000</div>
+              </div>
+              <div class="lrow">
+                <div class="licon in">IN</div>
+                <div><div class="nm">Daily contribution</div><div class="meta">11 JUL . AGENT CASH</div></div>
+                <div class="amt pos">+1,000</div>
+              </div>
+              <div class="lrow">
+                <div class="licon fee">PL</div>
+                <div><div class="nm">Platform slot</div><div class="meta">01 JUL . CYCLE 3 DAY 1</div></div>
+                <div class="amt fee">-1,000</div>
+              </div>
+              <div class="lrow">
+                <div class="licon out">OUT</div>
+                <div><div class="nm">Withdrawal</div><div class="meta">28 JUN . AT AGENT</div></div>
+                <div class="amt neg">-5,000</div>
+              </div>
+              <div class="lrow">
+                <div class="licon in">IN</div>
+                <div><div class="nm">Daily contribution</div><div class="meta">27 JUN . AGENT CASH</div></div>
+                <div class="amt pos">+1,000</div>
+              </div>
+            </div>
+            <div class="tabbar">
+              <div class="tab"><div class="dot"></div>Home</div>
+              <div class="tab"><div class="dot"></div>Save</div>
+              <div class="tab active"><div class="dot"></div>History</div>
+              <div class="tab"><div class="dot"></div>Profile</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <!-- 6 RECEIPT -->
+      <div class="device-wrap">
+        <div class="device-cap"><span>06</span><b>Payment receipt</b></div>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="sc-scroll" style="padding-top:16px">
+              <div class="receipt">
+                <div class="rhead">
+                  <div class="ok">OK</div>
+                  <div class="rt">Payment successful</div>
+                  <div class="ra">NGN 1,000</div>
+                </div>
+                <div class="rline"><span class="rk">Saved to</span><span class="rv">Card 10293</span></div>
+                <div class="rline"><span class="rk">Method</span><span class="rv">Debit card</span></div>
+                <div class="rline"><span class="rk">Gateway ref</span><span class="rv">XP-9K2F7A</span></div>
+                <div class="rline"><span class="rk">New balance</span><span class="rv" style="color:#1E8A5A">NGN 11,000</span></div>
+                <div class="rline"><span class="rk">Available</span><span class="rv">NGN 9,000</span></div>
+                <div class="rfoot">
+                  <div class="btn btn-navy">Share receipt</div>
+                  <div class="btn btn-ghost" style="margin-top:10px">Done</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="note">
+    <h3>What v2 locks in</h3>
+    <ul>
+      <li>Brand is now Neymar Savings in navy and gold, carried from the physical card so existing customers recognise it instantly.</li>
+      <li>Money rules are real and visible: a 31-slot cycle with day 1 as the platform slot, and a withdrawal floor of two daily contributions computed for the agent and shown to the customer.</li>
+      <li>The agent is bound at registration through the preferred agent ID, sees only their own customers, and the customer can audit every naira on the analysis screen.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    Neymar Savings, a subsidiary of Neymar Nig. Ltd. RC 7803876<br>
+    NIWA Ferry Terminal Complex, Outer-Marina, CMS, Lagos . 07031151051 . neymarsaving@gmail.com<br>
+    Confirm with client: day-1 platform slot, exact daily-amount options, logo artwork. Dashboards rebrand to follow.
+  </div>
+
+</div>
+
+</body>
+</html>
