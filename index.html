@@ -39,8 +39,8 @@
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:16px}
   .eyebrow:before{content:"";width:26px;height:2px;background:var(--gold)}
 
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:820px){.cards{grid-template-columns:1fr}}
   .rcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;transition:transform .15s, box-shadow .15s}
   .rcard:hover{transform:translateY(-3px);box-shadow:0 20px 40px -24px rgba(15,35,80,0.4);border-color:var(--gold)}
   .rcard .ic{width:56px;height:56px;border-radius:15px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:22px;margin-bottom:16px}
@@ -116,6 +116,18 @@
         <div class="open-btn">Open dashboards design</div>
       </a>
 
+      <a class="rcard" href="neymar-savings-changes-v3.html">
+        <div class="ic">v3</div>
+        <h3>Review Changes</h3>
+        <div class="sub">Updates requested at the review meeting.</div>
+        <div class="list">
+          <div class="li">Customer notifications and 4-digit PIN</div>
+          <div class="li">Self sign-up with admin approval and agent assignment</div>
+          <div class="li">End-of-cycle account closure</div>
+        </div>
+        <div class="open-btn">Open review changes</div>
+      </a>
+
     </div>
   </section>
 
@@ -135,7 +147,7 @@
         <div><div class="mt">Two contributions always stay</div><div class="md">A customer can withdraw at any time but must leave <b>2</b> daily contributions. On <b>NGN 1,000</b> daily, that is <b>NGN 2,000</b> kept in the account.</div></div>
       </div>
       <div class="mrow">
-        <div class="mi">₦</div>
+        <div class="mi">$</div>
         <div><div class="mt">Digital payments settle to your account</div><div class="md">Customers can also pay by card or transfer. All money settles directly into the company bank account.</div></div>
       </div>
       <div class="mrow">
@@ -157,7 +169,7 @@
   </section>
 
   <div class="foot">
-    <b>Neymar Savings</b>, a subsidiary of Neymar Nig. Ltd. . RC 7803876 <br>
+    <b>Neymar Savings</b>, a subsidiary of Neymar Nig. Ltd. . RC 7803876<br>
     NIWA Ferry Terminal Complex, Outer-Marina, CMS, Lagos . 07031151051 . neymarsaving@gmail.com<br>
     Prepared by Cyber Identity and Reverse Extension Ltd.
   </div>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neymar Savings - Review Changes v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2350;--navy-600:#17346F;--navy-700:#0A1734;--blue:#2450C8;
+    --gold:#EDB13E;--gold-soft:#FBEAC4;--gold-deep:#B9832A;
+    --bg:#EEF1F7;--card:#FFFFFF;--ink:#14203A;--muted:#5E6B84;--line:#DCE2EE;
+    --positive:#1E8A5A;--negative:#C0492E;--paper:#FBF9F1;
+    --sora:'Sora',system-ui,sans-serif;--manrope:'Manrope',system-ui,sans-serif;--mono:'Space Mono','Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--manrope);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  .masthead{background:var(--navy);color:#fff;padding:52px 0 44px;position:relative;overflow:hidden}
+  .masthead:before{content:"";position:absolute;right:-120px;top:-120px;width:340px;height:340px;background:radial-gradient(circle, rgba(237,177,62,0.22), transparent 68%)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .masthead h1{font-family:var(--sora);font-weight:800;font-size:clamp(28px,5vw,46px);line-height:1.05;letter-spacing:-0.02em;max-width:760px}
+  .masthead p{margin-top:16px;max-width:640px;color:rgba(255,255,255,0.82);font-size:16px}
+  .chgrow{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--navy-700);background:var(--gold);padding:6px 12px;border-radius:999px;font-weight:700}
+
+  section{padding:48px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .eyebrow:before{content:"";width:26px;height:2px;background:var(--gold)}
+  .sec-title{font-family:var(--sora);font-weight:700;font-size:clamp(20px,3vw,26px);letter-spacing:-0.01em;margin-bottom:8px}
+  .sec-sub{color:var(--muted);max-width:640px;margin-bottom:26px}
+
+  .screens{display:flex;flex-wrap:wrap;gap:34px 26px}
+  .device-wrap{width:300px}
+  .device-cap{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;gap:8px;align-items:baseline}
+  .device-cap b{color:var(--ink);font-family:var(--sora);font-weight:700;font-size:14px;letter-spacing:0}
+  .tagnew{font-family:var(--mono);font-size:9px;background:var(--gold-soft);color:var(--gold-deep);padding:2px 7px;border-radius:5px;letter-spacing:1px}
+  .phone{width:300px;height:640px;background:#000;border-radius:36px;padding:9px;box-shadow:0 24px 48px -20px rgba(15,35,80,0.5)}
+  .screen{width:100%;height:100%;background:var(--bg);border-radius:28px;overflow:hidden;display:flex;flex-direction:column}
+  .status{height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-family:var(--mono);font-size:10px;color:var(--ink);flex:none}
+  .status.on-navy{color:rgba(255,255,255,0.9)}
+  .sc-body{flex:1;overflow:hidden;display:flex;flex-direction:column}
+  .sc-scroll{flex:1;overflow:hidden;padding:0 16px 16px}
+
+  .appbar{background:var(--navy);color:#fff;padding:14px 16px 20px;flex:none}
+  .appbar .hi{font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--mono);letter-spacing:1px;text-transform:uppercase}
+  .appbar .who{font-family:var(--sora);font-weight:700;font-size:18px;margin-top:2px}
+  .appbar-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .bell{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700;font-size:15px;position:relative;flex:none}
+  .bell .badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:var(--navy-700);font-family:var(--mono);font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px}
+
+  .balance-card{background:linear-gradient(135deg,var(--navy-600),var(--navy));color:#fff;border-radius:18px;padding:18px;margin-top:6px;position:relative;overflow:hidden;border:1px solid rgba(237,177,62,0.25)}
+  .balance-card:after{content:"";position:absolute;right:-30px;bottom:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(237,177,62,0.28),transparent 70%)}
+  .bc-label{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.65)}
+  .bc-amt{font-family:var(--mono);font-weight:700;font-size:28px;margin-top:5px}
+  .bc-split{display:flex;gap:14px;margin-top:12px;position:relative;z-index:1}
+  .bc-split .s{flex:1}
+  .bc-split .sk{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+  .bc-split .sv{font-family:var(--mono);font-weight:700;font-size:13px;margin-top:3px}
+  .bc-split .sv.gold{color:var(--gold)}
+
+  .tabbar{flex:none;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 0 12px}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9px;color:var(--muted);font-family:var(--mono);letter-spacing:0.5px}
+  .tab .dot{width:20px;height:20px;border-radius:7px;background:var(--line)}
+  .tab.active{color:var(--navy)}
+  .tab.active .dot{background:var(--navy)}
+
+  .btn{font-family:var(--manrope);font-weight:700;font-size:15px;padding:14px 18px;border-radius:12px;border:none;text-align:center}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-gold{background:var(--gold);color:var(--navy-700)}
+  .btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+
+  /* notifications */
+  .notif{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;gap:11px;margin-bottom:9px}
+  .notif.unread{border-left:3px solid var(--gold)}
+  .notif .ni{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:13px;flex:none}
+  .notif .ni.due{background:var(--gold-soft);color:var(--gold-deep)}
+  .notif .ni.miss{background:#F8E1DA;color:var(--negative)}
+  .notif .ni.ok{background:#DFF3E8;color:var(--positive)}
+  .notif .nt{font-weight:700;font-size:12px}
+  .notif .nd{font-size:11px;color:var(--muted);margin-top:1px}
+  .notif .ntime{font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:auto;flex:none}
+
+  /* form */
+  .fgroup{margin-bottom:11px}
+  .fgroup .fl{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 5px 2px}
+  .fin{background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:11px 13px;font-size:13px;font-weight:600}
+  .fin.ph{color:#9aa6bd;font-weight:500}
+  .frow2{display:flex;gap:10px}
+  .frow2 .fgroup{flex:1}
+  .agent-bind{background:var(--navy);color:#fff;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .agent-bind .ab-ic{width:30px;height:30px;border-radius:8px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:12px}
+  .agent-bind .abt{font-size:10px;color:rgba(255,255,255,0.65);font-family:var(--mono);letter-spacing:0.5px;text-transform:uppercase}
+  .agent-bind .abv{font-weight:700;font-size:12px}
+
+  /* pin */
+  .login{background:var(--navy);height:100%;display:flex;flex-direction:column}
+  .login .brandtop{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;padding:24px}
+  .logo-mark{width:64px;height:64px;border-radius:18px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:28px;margin-bottom:16px}
+  .login h2{font-family:var(--sora);font-weight:800;font-size:22px}
+  .login .lp{color:rgba(255,255,255,0.72);font-size:11px;margin-top:8px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase}
+  .login-sheet{background:var(--bg);border-radius:26px 26px 0 0;padding:22px 18px 26px}
+  .login-sheet .lbl{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 10px 2px}
+  .pin-row{display:flex;gap:11px;justify-content:center;margin-bottom:18px}
+  .pin{width:52px;height:56px;background:#fff;border:1.5px solid var(--line);border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:24px;color:var(--navy)}
+  .pin.filled{border-color:var(--navy)}
+  .pin .dot{width:12px;height:12px;border-radius:50%;background:var(--navy)}
+
+  /* pending */
+  .pending-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px}
+  .pend-ic{width:78px;height:78px;border-radius:22px;background:var(--gold-soft);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:32px;margin-bottom:20px}
+  .pending-wrap h3{font-family:var(--sora);font-size:20px;margin-bottom:10px}
+  .pending-wrap p{color:var(--muted);font-size:13px;max-width:230px}
+  .pend-steps{margin-top:22px;width:100%;display:flex;flex-direction:column;gap:10px}
+  .pstep{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;display:flex;gap:10px;align-items:center;text-align:left}
+  .pstep .pn{width:24px;height:24px;border-radius:7px;background:var(--navy);color:#fff;font-family:var(--mono);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none}
+  .pstep.done .pn{background:var(--positive)}
+  .pstep .ptx{font-size:12px;font-weight:600}
+
+  /* closure */
+  .close-hero{background:var(--navy);color:#fff;padding:16px;border-radius:0}
+  .cbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+  .crow{display:flex;justify-content:space-between;padding:8px 0;font-size:12px;border-bottom:1px solid var(--line)}
+  .crow:last-child{border-bottom:none}
+  .crow .ck{color:var(--muted)}
+  .crow .cv{font-family:var(--mono);font-weight:700}
+  .crow.fee .cv{color:var(--gold-deep)}
+  .crow.total{padding-top:11px;margin-top:4px;border-top:2px solid var(--navy);border-bottom:none}
+  .crow.total .ck{font-weight:800;color:var(--navy)}
+  .crow.total .cv{font-size:17px;color:var(--positive)}
+  .cnote{background:var(--gold-soft);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:10px;color:var(--gold-deep);font-family:var(--mono);line-height:1.6}
+  .cycle-badge{background:#DFF3E8;color:var(--positive);font-family:var(--mono);font-size:10px;padding:6px 10px;border-radius:8px;text-align:center;letter-spacing:0.5px;margin-top:12px}
+
+  /* browser (approval queue) */
+  .browser{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 20px 44px -24px rgba(15,35,80,0.45)}
+  .bbar{background:#E5E9F2;border-bottom:1px solid var(--line);padding:9px 14px;display:flex;align-items:center;gap:8px}
+  .bdot{width:11px;height:11px;border-radius:50%}
+  .burl{margin-left:12px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px 12px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .bbody{overflow-x:auto}
+  .dash{display:flex;min-width:840px;background:var(--bg)}
+  .side{width:200px;background:var(--navy);color:#fff;padding:16px 0;flex:none;display:flex;flex-direction:column;min-height:430px}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 18px 18px}
+  .brand .lm{width:32px;height:32px;border-radius:9px;background:var(--gold);color:var(--navy-700);display:flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:800;font-size:15px}
+  .brand .bt{font-family:var(--sora);font-weight:700;font-size:14px}
+  .brand .bs{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase}
+  .nav{display:flex;flex-direction:column;gap:2px;padding:6px 10px;flex:1}
+  .nav .ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:13px;color:rgba(255,255,255,0.72);font-weight:600}
+  .nav .ni .ndot{width:7px;height:7px;border-radius:2px;background:rgba(255,255,255,0.35)}
+  .nav .ni.active{background:rgba(237,177,62,0.18);color:#fff}
+  .nav .ni.active .ndot{background:var(--gold)}
+  .nav .ni .nbadge{margin-left:auto;background:var(--gold);color:var(--navy-700);font-family:var(--mono);font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px}
+  .main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px}
+  .topbar .tt{font-family:var(--sora);font-weight:700;font-size:17px}
+  .topbar .tsub{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
+  .content{padding:20px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+  table{width:100%;border-collapse:collapse}
+  thead th{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:400}
+  tbody td{padding:11px 10px;border-bottom:1px solid var(--line);font-size:12px}
+  tbody tr:last-child td{border-bottom:none}
+  .cnum{font-family:var(--mono);font-weight:700}
+  .cname{font-weight:700}
+  .cmini{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .miniava{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:var(--gold-deep);display:inline-flex;align-items:center;justify-content:center;font-family:var(--sora);font-weight:700;font-size:10px;vertical-align:middle;margin-right:9px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:999px;font-weight:700;background:var(--gold-soft);color:var(--gold-deep)}
+  .abtn{font-family:var(--manrope);font-weight:700;font-size:11px;padding:6px 11px;border-radius:8px;border:none;margin-right:5px}
+  .abtn.ok{background:var(--navy);color:#fff}
+  .abtn.no{background:#fff;border:1.5px solid var(--negative);color:var(--negative)}
+
+  .note{background:var(--navy-700);color:#fff;border-radius:16px;padding:22px 24px;margin-top:44px}
+  .note h3{font-family:var(--sora);font-size:16px;margin-bottom:10px;color:var(--gold)}
+  .note ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .note li{font-size:14px;color:rgba(255,255,255,0.85);padding-left:20px;position:relative}
+  .note li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--gold)}
+  .foot{color:var(--muted);font-size:12px;font-family:var(--mono);text-align:center;margin-top:40px;letter-spacing:0.5px;line-height:1.7}
+</style>
+</head>
+<body>
+    <div class="masthead">
+  <div class="wrap">
+    <div class="kicker">Neymar Savings // Review Changes v3</div>
+    <h1>Changes from the design review, applied.</h1>
+    <p>The screens below show only what changed after the review meeting: customer notifications, a 4-digit PIN, self sign-up with approval, and end-of-cycle account closure. Everything else stays as approved.</p>
+    <div class="chgrow">
+      <span class="chip">Notifications</span>
+      <span class="chip">4-digit PIN</span>
+      <span class="chip">Self sign-up</span>
+      <span class="chip">Cycle-end closure</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 1 NOTIFICATIONS -->
+  <section>
+    <div class="eyebrow">Change 1</div>
+    <div class="sec-title">Customer reminders</div>
+    <div class="sec-sub">A bell on the customer home carries an unread count, and a notifications screen lists payment reminders and account notices. Reminders reach the customer by in-app alert and phone push notification. (SMS is not part of Version 1 per the agreement, and would be a separate addition if wanted.)</div>
+    <div class="screens">
+
+      <div class="device-wrap">
+        <div class="device-cap"><span>01</span><b>Home with bell</b> <span class="tagnew">changed</span></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar">
+              <div class="appbar-top">
+                <div><div class="hi">Welcome back</div><div class="who">Amaka</div></div>
+                <div class="bell">B<span class="badge">3</span></div>
+              </div>
+              <div class="balance-card">
+                <div class="bc-label">Savings balance</div>
+                <div class="bc-amt">NGN 10,000</div>
+                <div class="bc-split">
+                  <div class="s"><div class="sk">Available</div><div class="sv gold">8,000</div></div>
+                  <div class="s"><div class="sk">Locked</div><div class="sv">2,000</div></div>
+                  <div class="s"><div class="sk">Streak</div><div class="sv">11 days</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="notif unread"><div class="ni due">!</div><div><div class="nt">Payment due today</div><div class="nd">NGN 1,000 for card 10293</div></div><div class="ntime">now</div></div>
+              <div class="notif unread"><div class="ni miss">X</div><div><div class="nt">You missed yesterday</div><div class="nd">Keep your 11-day streak alive</div></div><div class="ntime">1d</div></div>
+              <div class="notif"><div class="ni ok">OK</div><div><div class="nt">Withdrawal approved</div><div class="nd">NGN 5,000 paid at agent</div></div><div class="ntime">3d</div></div>
+            </div>
+            <div class="tabbar">
+              <div class="tab active"><div class="dot"></div>Home</div>
+              <div class="tab"><div class="dot"></div>Save</div>
+              <div class="tab"><div class="dot"></div>History</div>
+              <div class="tab"><div class="dot"></div>Profile</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="device-wrap">
+        <div class="device-cap"><span>02</span><b>Notifications</b> <span class="tagnew">new</span></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar"><div class="who">Notifications</div><div class="hi">3 new</div></div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="notif unread"><div class="ni due">!</div><div><div class="nt">Payment due today</div><div class="nd">Save NGN 1,000 to stay on track</div></div><div class="ntime">now</div></div>
+              <div class="notif unread"><div class="ni miss">X</div><div><div class="nt">Missed payment</div><div class="nd">No contribution recorded on 11 Jul</div></div><div class="ntime">1d</div></div>
+              <div class="notif unread"><div class="ni miss">!</div><div><div class="nt">3 days without saving</div><div class="nd">Your cycle progress is paused</div></div><div class="ntime">2d</div></div>
+              <div class="notif"><div class="ni ok">OK</div><div><div class="nt">Withdrawal approved</div><div class="nd">NGN 5,000 approved by admin</div></div><div class="ntime">3d</div></div>
+              <div class="notif"><div class="ni ok">N</div><div><div class="nt">New cycle started</div><div class="nd">Cycle 3 begins, 31 days</div></div><div class="ntime">11d</div></div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2 PIN -->
+  <section>
+    <div class="eyebrow">Change 2</div>
+    <div class="sec-title">4-digit PIN</div>
+    <div class="sec-sub">The customer transaction PIN is now 4 digits instead of 6. Security is maintained by locking the account after repeated wrong attempts, enforced on the server.</div>
+    <div class="screens">
+
+      <div class="device-wrap">
+        <div class="device-cap"><span>03</span><b>Enter PIN</b> <span class="tagnew">changed</span></div>
+        <div class="phone"><div class="screen">
+          <div class="login">
+            <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+            <div class="brandtop">
+              <div class="logo-mark">N</div>
+              <h2>Neymar Savings</h2>
+              <div class="lp">Enter your PIN</div>
+            </div>
+            <div class="login-sheet">
+              <div class="lbl">4-digit transaction PIN</div>
+              <div class="pin-row">
+                <div class="pin filled"><span class="dot"></span></div>
+                <div class="pin filled"><span class="dot"></span></div>
+                <div class="pin filled"><span class="dot"></span></div>
+                <div class="pin"></div>
+              </div>
+              <div class="btn btn-gold">Confirm</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+  <!-- 3 SELF SIGN-UP -->
+  <section>
+    <div class="eyebrow">Change 3</div>
+    <div class="sec-title">Self sign-up with approval</div>
+    <div class="sec-sub">A customer can register themselves. They enter their details and location, set a 4-digit PIN, and land in a pending state. They cannot save or withdraw until an admin approves. At approval the system suggests agents at the customer's location and the admin confirms one, so every self-registered customer is verified and bound to the right agent. Agents can still onboard customers directly in the field, bound immediately.</div>
+    <div class="screens">
+
+      <div class="device-wrap">
+        <div class="device-cap"><span>04</span><b>Create account</b> <span class="tagnew">new</span></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar"><div class="who">Create your account</div><div class="hi">Neymar Savings</div></div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="frow2">
+                <div class="fgroup"><div class="fl">First name</div><div class="fin">Amaka</div></div>
+                <div class="fgroup"><div class="fl">Surname</div><div class="fin">Okonkwo</div></div>
+              </div>
+              <div class="fgroup"><div class="fl">Phone number</div><div class="fin">0803 xxx 4471</div></div>
+              <div class="fgroup"><div class="fl">Business</div><div class="fin ph">e.g. Provisions trader</div></div>
+              <div class="fgroup"><div class="fl">Location</div><div class="fin ph">e.g. Balogun Market, Lagos</div></div>
+              <div class="frow2">
+                <div class="fgroup"><div class="fl">Daily amount</div><div class="fin">NGN 1,000</div></div>
+                <div class="fgroup"><div class="fl">Set 4-digit PIN</div><div class="fin">. . . .</div></div>
+              </div>
+              <div class="btn btn-gold" style="margin-top:4px">Submit for approval</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="device-wrap">
+        <div class="device-cap"><span>05</span><b>Pending approval</b> <span class="tagnew">new</span></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body" style="background:var(--navy)">
+            <div class="pending-wrap">
+              <div class="pend-ic">...</div>
+              <h3 style="color:#fff">Account pending approval</h3>
+              <p style="color:rgba(255,255,255,0.7)">Thank you, Amaka. Your account is being reviewed. You can save once it is approved.</p>
+              <div class="pend-steps">
+                <div class="pstep done"><div class="pn">1</div><div class="ptx">Details submitted</div></div>
+                <div class="pstep"><div class="pn">2</div><div class="ptx">Admin review and agent assignment</div></div>
+                <div class="pstep"><div class="pn">3</div><div class="ptx">Account activated, start saving</div></div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <div style="width:100%">
+        <div class="device-cap"><span>06</span><b>Approval queue with agent assignment (web)</b> <span class="tagnew">new</span></div>
+        <div class="browser">
+          <div class="bbar"><span class="bdot" style="background:#E0655A"></span><span class="bdot" style="background:#E7B84F"></span><span class="bdot" style="background:#5AB97A"></span><span class="burl">app.neymarsaving.com/approvals</span></div>
+          <div class="bbody"><div class="dash">
+            <div class="side">
+              <div class="brand"><div class="lm">N</div><div><div class="bt">Neymar Savings</div><div class="bs">Control room</div></div></div>
+              <div class="nav">
+                <div class="ni"><span class="ndot"></span>Overview</div>
+                <div class="ni active"><span class="ndot"></span>Approvals<span class="nbadge">4</span></div>
+                <div class="ni"><span class="ndot"></span>Customers</div>
+                <div class="ni"><span class="ndot"></span>Agents</div>
+                <div class="ni"><span class="ndot"></span>Withdrawals</div>
+              </div>
+              <div style="padding:12px 16px;border-top:1px solid rgba(255,255,255,0.1)"><div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:1px;text-transform:uppercase">Super Admin</div></div>
+            </div>
+            <div class="main">
+              <div class="topbar"><div class="tt">Sign-up approvals</div><div class="tsub">4 customers awaiting review</div></div>
+              <div class="content">
+                <div class="panel">
+                  <div style="display:flex;align-items:center;gap:11px;padding-bottom:14px;border-bottom:1px solid var(--line)">
+                    <span class="miniava" style="width:38px;height:38px;font-size:13px">AO</span>
+                    <div style="flex:1">
+                      <div class="cname" style="font-size:14px">Amaka Okonkwo</div>
+                      <div class="cmini">0803 xxx 4471 . Provisions trader . Daily NGN 1,000</div>
+                    </div>
+                    <div style="text-align:right"><div class="cmini">Location</div><div class="cname" style="font-size:13px">Balogun Market</div></div>
+                    <button class="abtn no">Reject</button>
+                  </div>
+                  <div style="font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:14px 0 10px">Suggested agents at Balogun Market</div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td style="width:40%"><span class="miniava">MI</span><span class="cname">Musa Idris</span></td>
+                        <td class="cmini">AGT-0418</td>
+                        <td class="cnum">22 customers</td>
+                        <td><span class="pill" style="background:#DFF3E8;color:var(--positive)">Lightest load</span></td>
+                        <td style="text-align:right"><button class="abtn ok">Assign and approve</button></td>
+                      </tr>
+                      <tr>
+                        <td><span class="miniava">TB</span><span class="cname">Tunde Bello</span></td>
+                        <td class="cmini">AGT-0421</td>
+                        <td class="cnum">34 customers</td>
+                        <td></td>
+                        <td style="text-align:right"><button class="abtn" style="background:var(--bg);border:1px solid var(--line);color:var(--ink)">Assign and approve</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--line);letter-spacing:0.3px">No agent at this location? <span style="color:var(--blue)">Assign nearest agent manually</span></div>
+                </div>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- 4 CLOSURE -->
+  <section>
+    <div class="eyebrow">Change 4 . New business rule</div>
+    <div class="sec-title">End-of-cycle account closure</div>
+    <div class="sec-sub">At the end of a 31-day cycle, a customer may close the account and withdraw everything. On closure the two-contribution minimum is waived. The day-1 platform commission stays with Neymar Savings and is not refundable, as it was collected at the start of the cycle.</div>
+    <div class="screens">
+
+      <div class="device-wrap">
+        <div class="device-cap"><span>07</span><b>Close account</b> <span class="tagnew">new</span></div>
+        <div class="phone"><div class="screen">
+          <div class="status on-navy"><span>9:41</span><span>NGN . 4G</span></div>
+          <div class="sc-body">
+            <div class="appbar"><div class="who">Close account</div><div class="hi">End of cycle 3</div></div>
+            <div class="sc-scroll" style="padding-top:14px">
+              <div class="cycle-badge">Cycle 3 complete . 31 of 31 days</div>
+              <div class="cbox">
+                <div class="crow"><span class="ck">Total contributed</span><span class="cv">NGN 31,000</span></div>
+                <div class="crow fee"><span class="ck">Platform commission (day 1)</span><span class="cv">- NGN 1,000</span></div>
+                <div class="crow total"><span class="ck">You will receive</span><span class="cv">NGN 30,000</span></div>
+              </div>
+              <div class="cnote">On closure the 2-contribution minimum does not apply, so you receive all your savings. The day-1 platform commission is not refundable.</div>
+              <div class="btn" style="margin-top:14px;background:var(--negative);color:#fff">Withdraw all and close</div>
+              <div class="btn btn-ghost" style="margin-top:10px">Start a new cycle instead</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="note">
+    <h3>Summary of v3 changes</h3>
+    <ul>
+      <li>Customer notifications: in-app bell and notifications screen, delivered by push. Reminders for due, missed and non-payment, plus account notices. SMS remains outside Version 1.</li>
+      <li>Transaction PIN reduced to 4 digits, protected by server-side lockout after repeated wrong attempts.</li>
+      <li>Self sign-up added, always landing in a pending state. At approval the system suggests agents at the customer's location and the admin confirms one, binding the customer. Agents can also onboard customers directly in the field, bound immediately.</li>
+      <li>End-of-cycle closure: withdraw all savings with the floor waived, day-1 commission retained and non-refundable.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    Neymar Savings, a subsidiary of Neymar Nig. Ltd. RC 7803876<br>
+    These changes will be merged into the approved apps and dashboards once signed off.
+  </div>
+
+</div>
+
+</body>
+</html>
